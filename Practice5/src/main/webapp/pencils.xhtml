@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+	<h:form id="frmPencil">
+Color:<h:inputText value="#{pencilController.pencil.color}" />
+Price:<h:inputText value="#{pencilController.pencil.price}" />
+Description:<h:inputText value="#{pencilController.pencil.description}" />
+size:<h:inputText value="#{pencilController.pencil.size}" />
+
+
+		<h:commandButton action="#{pencilController.save}" value="Save">
+			<f:ajax execute="frmPencil" render="frmPencil" />
+		</h:commandButton>
+
+		<h:commandButton rendered="#{pencilController.editMode}"
+			action="#{pencilController.save}" value="Cancel">
+			<f:ajax render="frmPencil"></f:ajax>
+		</h:commandButton>
+
+		<h:dataTable value="#{pencilController.pencils}" var="p" id="dtPencil">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+	 	#{p.id}
+	</h:column>
+
+
+
+			<h:column>
+				<f:facet name="header">Color</f:facet>
+	 	#{p.color}
+	</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Price</f:facet>
+	 	#{p.price}
+	</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Description</f:facet>
+		#{p.description}
+	</h:column>
+
+
+
+			<h:column>
+				<f:facet name="header">Size</f:facet>
+		#{p.size}
+	</h:column>
+			<h:column>
+				<f:facet name="header">Actions</f:facet>
+				<h:commandButton action="#{pencilController.delete(p)}"
+					value="Delete" onclick="return window.confirm ('Are you sure?')">
+					<f:ajax render="frmPencil:dtPencil" />
+				</h:commandButton>
+				<h:commandButton action="#{pencilController.update(p)}"
+					value="Update">
+					<f:ajax render="frmPencil" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body>
+</html>

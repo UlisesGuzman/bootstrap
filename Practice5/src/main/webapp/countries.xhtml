@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form id="frmCountry">
+Country Name:<h:inputText value="#{countryController.country.countryName}" />
+Region Id:<h:inputText value="#{countryController.country.regionId}" />
+
+		<h:commandButton action="#{countryController.save}" value="Save">
+			<f:ajax execute="frmCountry" render="frmCountry" />
+		</h:commandButton>
+
+		<h:commandButton rendered="#{countryController.editMode}"
+			action="#{countryController.save}" value="Cancel">
+			<f:ajax render="frmCountry"></f:ajax>
+		</h:commandButton>
+
+		<h:dataTable value="#{countryController.countries}" var="c" id="dtCountry">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+	 	#{c.id}
+	</h:column>
+
+
+
+			<h:column>
+				<f:facet name="header">Country Name</f:facet>
+	 	#{c.countryName}
+	</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Region Id</f:facet>
+	 	#{c.regionId}
+	</h:column>
+
+			<h:column>
+				<f:facet name="header">Actions</f:facet>
+				<h:commandButton action="#{countryController.delete(c)}"
+					value="Delete" onclick="return window.confirm ('Are you sure?')">
+					<f:ajax render="frmCountry:dtCountry" />
+				</h:commandButton>
+				<h:commandButton action="#{countryController.update(c)}"
+					value="Update">
+					<f:ajax render="frmCountry" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+</body> 
+</html>

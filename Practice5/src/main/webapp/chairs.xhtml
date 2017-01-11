@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body>
+<h:form id="frmChair">
+Style:<h:inputText value="#{chairController.chair.style}" />
+Color:<h:inputText value="#{chairController.chair.color}" />
+Price:<h:inputText value="#{chairController.chair.price}" />
+size:<h:inputText value="#{chairController.chair.size}" />
+
+
+		<h:commandButton action="#{chairController.save}" value="Save">
+			<f:ajax execute="frmChair" render="frmChair" />
+		</h:commandButton>
+
+		<h:commandButton rendered="#{chairController.editMode}"
+			action="#{chairController.save}" value="Cancel">
+			<f:ajax render="frmChair"></f:ajax>
+		</h:commandButton>
+
+		<h:dataTable value="#{chairController.chairs}" var="h" id="dtChair">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+	 	#{h.id}
+	</h:column>
+
+
+
+			<h:column>
+				<f:facet name="header">Style</f:facet>
+	 	#{h.style}
+	</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Color</f:facet>
+	 	#{h.color}
+	</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Price</f:facet>
+		#{h.price}
+	</h:column>
+
+
+
+			<h:column>
+				<f:facet name="header">Size</f:facet>
+		#{h.size}
+	</h:column>
+			<h:column>
+				<f:facet name="header">Actions</f:facet>
+				<h:commandButton action="#{chairController.delete(h)}"
+					value="Delete" onclick="return window.confirm ('Are you sure?')">
+					<f:ajax render="frmChair:dtChair" />
+				</h:commandButton>
+				<h:commandButton action="#{chairController.update(h)}"
+					value="Update">
+					<f:ajax render="frmChair" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+</body> 
+</html>
